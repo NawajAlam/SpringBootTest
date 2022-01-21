@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:fragment="layout(content)">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+	integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<!-- Bootstrap DataTable CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
+<title th:text="${title}">Base</title>
+</head>
+<body>
+	<!-- navbar -->
+	<nav class="fixed-top navbar navbar-expand-lg navbar-dark"
+		style="background-color: blue;">
+
+		<a class="navbar-brand" href="/">Smart Contact Manager</a>
+
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+			<ul class="navbar-nav ml-auto text-uppercase">
+				<li class="nav-item active"><a class="nav-link"
+					href="/user/index">Home <span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="/user/about">About</a></li>
+
+				<li class="nav-item"><a class="nav-link" href="/user/profile"><span
+						th:text="${user.name}"></span></a></li>
+
+				<li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+
+			</ul>
+
+		</div>
+	</nav>
+	<!-- End nav bar -->
+
+	<!-- Side bar -->
+	<div class="sidebar mt-4">
+		<span onclick="toggleSidebar()" class="crossBtn">&times;</span> <a
+			href="/user/index" class="item"><i class="fas fa-home"></i> Home</a>
+		<a href="/user/show/0" class="item"><i class="fas fa-eye"></i>
+			View Contacts</a> <a href="/user/add" class="item"><i
+			class="fas fa-plus-circle"></i> Add Contact</a> <a href="/user/profile"
+			class="item"><i class="fas fa-user-circle"></i> Profile</a> <a
+			href="" class="item"><i class="fas fa-cogs"></i> Setting</a> <a
+			href="/logout" class="item"><i class="fas fa-sign-out-alt"></i>
+			Logout</a>
+		<div class="divider"></div>
+	</div>
+	<!-- End side bar -->
+
+	<!-- start content area -->
+	<div class="content mt-5">
+
+		<i onclick="toggleSidebar()" class="fas fa-bars m-3"></i>
+
+
+		<div th:replace="${content}"></div>
+	</div>
+
+
+	<!-- jQuery js-->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--Export To excel  -->
+ <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+	<!--Export to pdf  -->
+	 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+	
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script> -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+
+
+
+<!-- jQuery Datatable js -->
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<!-- Bootstrap Datatable js -->    
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+	<script type="text/javascript" th:src="@{/js/script.js}"></script>
+	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
+	<script type="text/javascript" th:src="@{/js/sweetalert.min.js}"></script>
+
+	<script type="text/javascript">
+$(document).ready(function(){
+	$("#dttbl").DataTable({});
+	
+});
+</script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#msg").fadeOut(5000);
+	});
+	</script>
+	<script type="text/javascript">
+	
+	function deleteContact(cid) {
+		swal({
+			  title: "Are you sure?",
+			  text: "Once deleted, you will not be able to recover this contact!",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+			    window.location="/user/delete/"+cid;
+			  
+			  } else {
+			    swal("Your contact is safe!");
+			  }
+			});
+	}
+	</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#exportToExcel").click(function(){
+			  var tempTable = $("#dttbl").html();
+			 $("#dttbl .photo").remove();
+			 $("#dttbl .edit").remove(); 
+			$("#dttbl").table2excel({
+				
+
+				    // exclude CSS class
+				    exclude:".noExl",
+				    name:"Contact Details",  
+				    filename:"Contact Details", //do not include extension
+				    fileext:".xls", // file extension
+				 
+				   // exclude_img:true,
+				    exclude_links:true,
+				    exclude_inputs:true,
+				  });
+			 $("#dttbl").html(tempTable);
+
+		})
+	});
+	</script>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#exportTopdf").click(function(){
+			 
+			html2canvas($('#dttbl')[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("Table.pdf");
+                }
+            });
+			
+
+		})
+	});
+	</script>
+</body>
+</html>

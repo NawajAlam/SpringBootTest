@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!-- jQuery js-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<section>
+		<div class="card mr-3 ml-3">
+			<div class="card-body">
+				<h1 class="text-center">Show Contacts</h1>
+
+				<div th:if="${session.message}" id="msg"
+					th:classappend="${'alert-'+session.message.type}"
+					class="container alert text-center" role="alert">
+					<span th:text="${session.message.content}"></span>
+					<th:block th:text="${#session.removeAttribute('message')}">
+				</div>
+
+             <button id="exportToExcel" class="btn btn-info mb-2">Export To Excel</button><br>
+            <!--  <button id="exportTopdf" class="btn btn-info mb-2">Export PDF</button><br> -->
+				<table class="table" id="dttbl">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">Id</th>
+							<th scope="col">First Name</th>
+							<th scope="col">Last Name</th>
+							<th scope="col">Phone</th>
+							<th scope="col">Email</th>
+							<th scope="col" class="photo">Photo</th>
+							<th scope="col" class="edit">Edit</th>
+						</tr>
+					</thead>
+					<tbody>
+
+
+
+						<tr th:each="c: ${contacts}">
+							<th scope="row" th:text="${c.cId}"></th>
+							<td th:text="${c.firstName}"></td>
+							<td th:text="${c.lastName}"></td>
+							<td th:text="${c.phone}"></td>
+							<td><a th:href="@{'/user/contact/'+${c.cId}}"> <span
+									th:text="${c.email}"></span>
+							</a></td>
+							<td><img class="my-profil-picture"
+								th:src="@{'/images/'+${c.image}}" alt="profile photo"></td>
+							<td>
+								<!-- delete --> 
+								<a th:href="@{'/user/delete/'+${c.cId}}"
+								th:onclick="alert('Are You Sure You want to delete!!')"
+								class="btn btn-outline-danger"> <i
+									class="fas fa-trash-alt"></i>
+
+							</a> <!-- Edit --><!-- btn btn-danger btn-smart -->
+							<form th:action="@{'/user/edit/'+${c.cId}}" method="post" class="mt-2">
+								<button type="submit" class="btn btn-outline-success">
+									<i class="fas fa-edit"></i>
+								</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+
+				</table>
+				<!-- Pagination -->
+				<!-- <nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li th:if="${currentPage!=0}" class="page-item"><a
+							class="page-link" th:href="@{'/user/show/'+${currentPage-1}}">Previous</a></li>
+
+						<li th:classappend="${currentPage==i-1?'active':''}"
+							th:each="i: ${#numbers.sequence(1,totalPage)}" class="page-item"><a
+							th:href="@{'/user/show/'+${i-1}}" class="page-link"><span
+								th:text="${i}"></span></a></li>
+						<li th:if="${currentPage+1!=totalPage}" class="page-item"><a
+							class="page-link" th:href="@{'/user/show/'+${currentPage+1}}">Next</a></li>
+					</ul>
+				</nav> -->
+			</div>
+
+		</div>
+	</section>
+	
+</body>
+</html>
