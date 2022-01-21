@@ -5,7 +5,8 @@ public class Test {
 	private int id;
 	private int fee;
 	
-	public void m2() {
+
+	public static void main(String[] args) {
 		
 	}
 }
