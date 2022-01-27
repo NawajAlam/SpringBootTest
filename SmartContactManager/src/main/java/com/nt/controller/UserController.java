@@ -291,6 +291,7 @@ public class UserController {
 		System.out.println("Order id: "+order.get("id"));
 		return order.toString();
 	}
+	//update payment record
 	@PostMapping("/update_order")
 	@ResponseBody
 	public ResponseEntity<?> updateOrder(@RequestBody Map<String,Object> map){
