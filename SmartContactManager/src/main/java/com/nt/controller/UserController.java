@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Optional;
 
@@ -276,13 +277,13 @@ public class UserController {
 		Integer total=amount/100;
 		myOrder.setAmount(total);
 		
-		/*
-		 * SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); String
-		 * dt=sdf.format(order.get("created_at"));
-		 * 
-		 * myOrder.setDate(dt);
-		 */
-		myOrder.setDate(order.get("created_at"));
+		
+		 SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		 String dt=sdf.format(order.get("created_at"));
+		 
+		 myOrder.setDate(dt);
+		 
+		//myOrder.setDate(order.get("created_at"));
 		myOrder.setPaymentId(null);
 		myOrder.setStatus("created");
 		myOrder.setUser(this.repo.getUserByUserName(p.getName()));
