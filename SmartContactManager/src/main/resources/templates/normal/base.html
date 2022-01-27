@@ -19,7 +19,8 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <!-- Bootstrap DataTable CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
 <title th:text="${title}">Base</title>
 </head>
@@ -64,7 +65,7 @@
 			View Contacts</a> <a href="/user/add" class="item"><i
 			class="fas fa-plus-circle"></i> Add Contact</a> <a href="/user/profile"
 			class="item"><i class="fas fa-user-circle"></i> Profile</a> <a
-			href="" class="item"><i class="fas fa-cogs"></i> Setting</a> <a
+			href="/user/changePwd" class="item"><i class="fas fa-cogs"></i> Setting</a> <a
 			href="/logout" class="item"><i class="fas fa-sign-out-alt"></i>
 			Logout</a>
 		<div class="divider"></div>
@@ -83,12 +84,15 @@
 
 	<!-- jQuery js-->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!--Export To excel  -->
- <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+	<!--Export To excel  -->
+	<script
+		src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
 	<!--Export to pdf  -->
-	 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-	
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -105,15 +109,19 @@
 
 
 
-<!-- jQuery Datatable js -->
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<!-- Bootstrap Datatable js -->    
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-
+	<!-- jQuery Datatable js -->
+	<script
+		src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+	<!-- Bootstrap Datatable js -->
+	<script
+		src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- 	<script type="text/javascript" th:src="@{/js/sweetalert.min.js}"></script> -->
+	<!--Razor Pay  -->
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 	<script type="text/javascript" th:src="@{/js/script.js}"></script>
 	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 
-	<script type="text/javascript" th:src="@{/js/sweetalert.min.js}"></script>
 
 	<script type="text/javascript">
 $(document).ready(function(){
@@ -146,7 +154,7 @@ $(document).ready(function(){
 			});
 	}
 	</script>
-<script type="text/javascript">
+	<script type="text/javascript">
 	$(document).ready(function(){
 		$("#exportToExcel").click(function(){
 			  var tempTable = $("#dttbl").html();
@@ -170,7 +178,7 @@ $(document).ready(function(){
 		})
 	});
 	</script>
-	
+
 	<script type="text/javascript">
 	$(document).ready(function(){
 		$("#exportTopdf").click(function(){

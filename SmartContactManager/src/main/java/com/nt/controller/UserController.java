@@ -1,21 +1,26 @@
 package com.nt.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.text.ParseException;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,16 +28,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nt.helper.Message;
 import com.nt.model.Contact;
+import com.nt.model.MyOrder;
 import com.nt.model.User;
 import com.nt.repo.ContactRepo;
+import com.nt.repo.OrderRepo;
 import com.nt.repo.UserRepo;
-
+import com.razorpay.Order;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -43,6 +54,8 @@ public class UserController {
 	@Autowired
 	private ContactRepo crepo;
 
+	@Autowired
+	private OrderRepo orepo;
 	//adding common data
 	@ModelAttribute
 	public void addCommonData(Model m,Principal p) {
@@ -153,7 +166,28 @@ public class UserController {
 		m.addAttribute("title", "User Profil Page");
 		return "normal/profile";
 	}
-
+	//Update Profil photo
+	@PostMapping("/updatePhoto")
+	public String updatePhoto(Model m,@RequestParam("imageProfile")MultipartFile file,Principal p) throws IOException {
+		m.addAttribute("title", "User Profil Page");
+		User user = repo.getUserByUserName(p.getName());
+		if(file.isEmpty()) {
+			System.out.println("File is empty");
+			user.setImageUrl("default.jpg");
+		}
+		else {
+		
+		System.out.println("Data  "+p.getName() +" "+user);
+		user.setImageUrl(file.getOriginalFilename());
+		File f = new ClassPathResource("static/images").getFile();
+		Path path = Paths.get(f.getAbsolutePath()+File.separator+file.getOriginalFilename());
+		Files.copy(file.getInputStream(),path , StandardCopyOption.REPLACE_EXISTING);
+		repo.save(user);
+		System.out.println("image is uploaded");
+		}
+		return "normal/profile";
+	}
+	
 	//delete
 	@GetMapping("/delete/{cId}")
 	public String deleteContact(@PathVariable("cId")Integer cid,Principal p,HttpSession session) {
@@ -211,5 +245,60 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return "redirect:/user/contact/"+contact.getCId();
+	}
+	
+	//change password
+	@GetMapping("/changePwd")
+		public String changePassword(Model m) {
+		m.addAttribute("title", "change password");
+		return "normal/change_password";
+	}
+	
+	//creating order for payment
+	@PostMapping("/create_order")
+	@ResponseBody
+	public String createOrder(@RequestBody Map<String,Object>data,Principal p) throws RazorpayException, ParseException {
+		System.out.println("Order Placed "+data);
+		Integer amt = Integer.parseInt(data.get("amnt").toString());
+		RazorpayClient client = new RazorpayClient("rzp_test_iWOCNg2GFiiXzd", "MrSnaZXEfOzPHK4EyDFyTKOC");
+		JSONObject ob=new JSONObject();
+		ob.put("amount", amt*100);
+		ob.put("currency", "INR");
+		ob.put("receipt", "txn_123456");
+		//create order
+		Order order = client.Orders.create(ob);
+		System.out.println("Order :"+order);
+		
+		//we can save in data base
+		MyOrder myOrder = new MyOrder();
+		myOrder.setOrderId(order.get("id"));
+		Integer amount=order.get("amount");
+		Integer total=amount/100;
+		myOrder.setAmount(total);
+		
+		/*
+		 * SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); String
+		 * dt=sdf.format(order.get("created_at"));
+		 * 
+		 * myOrder.setDate(dt);
+		 */
+		myOrder.setDate(order.get("created_at"));
+		myOrder.setPaymentId(null);
+		myOrder.setStatus("created");
+		myOrder.setUser(this.repo.getUserByUserName(p.getName()));
+		myOrder.setReceipt(order.get("receipt"));
+		orepo.save(myOrder);
+		System.out.println("Order id: "+order.get("id"));
+		return order.toString();
+	}
+	@PostMapping("/update_order")
+	@ResponseBody
+	public ResponseEntity<?> updateOrder(@RequestBody Map<String,Object> map){
+		MyOrder myOrder = orepo.findByOrderId(map.get("order").toString());
+		myOrder.setPaymentId(map.get("payment").toString());
+		myOrder.setStatus(map.get("status").toString());
+		orepo.save(myOrder);
+		System.out.println("Map"+ map);
+		return ResponseEntity.ok("Updated");
 	}
 }

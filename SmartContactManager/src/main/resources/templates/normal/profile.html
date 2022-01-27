@@ -11,6 +11,18 @@
 			<h1>User Profile</h1>
 			<img class="my-profil-picture" style="height: 200px; width: 200px;"
 				th:src="@{'/images/'+${user.imageUrl}}" alt="profile photo">
+				
+			<!-- Add photo in profil -->
+			<form enctype="multipart/form-data" method="post"
+				th:action="@{/user/updatePhoto/}" class="mt-2">
+				<!-- image -->
+				<div class="custom-file">
+					<input type="file" name="imageProfile" required>
+
+					<button class="btn btn-outline-primary">Update Profile
+						Photo</button>
+				</div>
+			</form>
 			<div class="card">
 				<div class="card-body">
 					<h2>

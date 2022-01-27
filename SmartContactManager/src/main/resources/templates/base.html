@@ -14,15 +14,18 @@
 	crossorigin="anonymous">
 
 <link rel="stylesheet" th:href="@{/css/style.css}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+	integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <title th:text="${title}">Base</title>
 </head>
 <body>
-<!-- navbar -->
+	<!-- navbar -->
 	<nav class="navbar navbar-expand-lg navbar-dark  bg-primary">
-	
+
 		<a class="navbar-brand" href="/">Smart Contact Manager</a>
-		
+
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -31,18 +34,19 @@
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		
+
 			<ul class="navbar-nav ml-auto text-uppercase">
 				<li class="nav-item active"><a class="nav-link" href="/">Home
 						<span class="sr-only">(current)</span>
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="about">About</a></li>
-				
-				<li class="nav-item"><a class="nav-link" href="#" th:href="@{/signin}">Login</a></li>
+
+				<li class="nav-item"><a class="nav-link" href="#"
+					th:href="@{/signin}">Login</a></li>
 				<li class="nav-item"><a class="nav-link" href="signup">SignUp</a></li>
-				
+
 			</ul>
-			
+
 		</div>
 	</nav>
 
@@ -50,22 +54,19 @@
 	<div th:replace="${content}"></div>
 
 	<!-- footer -->
-		<div class="card text-center">
-  <div class="card-header">
-    Featured
-  </div>
-  <div class="card-body">
-    <i class="fab fa-facebook"></i>&nbsp;&nbsp; <i class="fab fa-twitter"></i>&nbsp;&nbsp; <i class="fab fa-google"></i>&nbsp;&nbsp; <i class="fab fa-linkedin"></i>
-  </div>
-  <div class="card-footer text-muted">
-    2 days ago
-  </div>
-</div>
+	<div class="card text-center">
+		<div class="card-header">Featured</div>
+		<div class="card-body">
+			<i class="fab fa-facebook"></i>&nbsp;&nbsp; <i class="fab fa-twitter"></i>&nbsp;&nbsp;
+			<i class="fab fa-google"></i>&nbsp;&nbsp; <i class="fab fa-linkedin"></i>
+		</div>
+		<div class="card-footer text-muted">2 days ago</div>
+	</div>
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<!-- jQuery js-->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script> -->
@@ -77,10 +78,10 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
-		
-		<script type="text/javascript" th:src="@{/js/script.js}"></script>
-		
-		<script type="text/javascript">
+
+	<script type="text/javascript" th:src="@{/js/script.js}"></script>
+
+	<script type="text/javascript">
 		function myFunction() {
 			  var x = document.getElementById("password");
 			  if (x.type === "password") {
