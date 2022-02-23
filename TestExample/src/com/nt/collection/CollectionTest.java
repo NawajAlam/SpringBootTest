@@ -6,7 +6,6 @@ import java.util.List;
 
 public class CollectionTest {
 
-	int b=20;
 	public static void addData() {
 		List list=new ArrayList<>();
 		List list1=new ArrayList<>();
