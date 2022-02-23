@@ -23,7 +23,7 @@ public class CollectionTest {
 		while(itr.hasNext()) {
 			System.out.println(itr.next());
 		}
-		//System.out.println(list2);
+		System.out.println(list2);
 	}
 
 	public static void main(String[] args) {
